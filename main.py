@@ -1,5 +1,7 @@
 #!/usr/bin/env python
 
-import LeagueBalancer
+from LeagueBalancer import LeagueBalancer
 
-print("Hello World")
+LB = LeagueBalancer()
+
+LB.hi()
