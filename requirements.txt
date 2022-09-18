@@ -2,3 +2,4 @@ python
 gspread
 BeautifulSoup
 lxml
+pandas
