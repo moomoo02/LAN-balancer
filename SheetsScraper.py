@@ -66,14 +66,17 @@ class SheetsScraper:
     #Gets list of player ranks 
     def getRanks(self):
         df = pd.read_csv(self.data, encoding='cp1252')
-        ranks = df['Peak Season 11 or 12 Rank '] #you can also use df['column_name']
+        ranks = df['Peak Season 11 or 12 Rank '] 
+        subDivisions = df['Corresponding tier to rank above']
 
         #Filter out nan
         res = []
-        for rank in ranks:
-            if not pd.isnull(rank):
-                res.append(rank)
+        for i in range(len(ranks)):
+            if not pd.isnull(ranks[i]) and not pd.isnull(subDivisions[i]):
+                res.append(ranks[i] + str(int(subDivisions[i])))
         return res
+
+    #def convertRanksToScore(self, ranks):
 
     #Return dictionary of key: ign, value: rank
     def getPlayers(self):
