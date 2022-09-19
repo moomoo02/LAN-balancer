@@ -16,13 +16,14 @@ class SheetsScraper:
     def __init__(self, sheetUrl):
         self.convertSheetToCsv(sheetUrl)
         self.data = "data.csv"
-        self.rankScore = {"Iron4": -1, "Iron3": -1, "Iron2": -1, "Iron1": -1,
+        self.rankScore = {"Unranked4": 0, "Unranked3": 0, "Unranked2": 0, "Unranked1": 0, "Unranked": 0,
+                          "Iron4": -1, "Iron3": -1, "Iron2": -1, "Iron1": -1,
                           "Bronze4": 0, "Bronze3": 0, "Bronze2": 0, "Bronze1": 0, 
                           "Silver4": 0, "Silver3": 0, "Silver2": 0, "Silver1": 0, 
                           "Gold4": 1, "Gold3": 1, "Gold2": 2, "Gold1": 2,
-                          "Plat4": 3, "Plat3": 3, "Plat2": 4, "Plat1": 4,
+                          "Platinum4": 3, "Platinum3": 3, "Platinum2": 4, "Platinum1": 4,
                           "Diamond4": 5, "Diamond3": 5, "Diamond2": 6, "Diamond1": 6,
-                          "Master": 7, "Challenger": 8, "Unranked": 0}
+                          "Master": 7, "Grandmaster": 8, "Challenger": 9}
 
     #Get the names of everyone on the sheets and returns a list of names
     def convertSheetToCsv(self,sheetURL):
@@ -72,18 +73,29 @@ class SheetsScraper:
         #Filter out nan
         res = []
         for i in range(len(ranks)):
-            if not pd.isnull(ranks[i]) and not pd.isnull(subDivisions[i]):
-                res.append(ranks[i] + str(int(subDivisions[i])))
+            if not pd.isnull(ranks[i]):
+                if pd.isnull(subDivisions[i]):
+                    res.append(ranks[i])
+                else:
+                    res.append(ranks[i] + str(int(subDivisions[i])))
         return res
 
-    #def convertRanksToScore(self, ranks):
+    #Takes in a list of ranks and returns a list of scores corresponding to ranks
+    def convertRanksToScore(self, ranks):
+        res = []
+        for rank in ranks:
+            res.append(self.rankScore[str(rank)])
+        return res
 
     #Return dictionary of key: ign, value: rank
     def getPlayers(self):
         #Get list of igns
         igns = self.getIgns();
         #Get list of ranks converted to integers
-        None
+        rankScores = self.convertRanksToScore(self.getRanks())
+
+        res = dict(zip(igns, rankScores))
+        return res
 
 
 
@@ -92,8 +104,6 @@ class SheetsScraper:
 
 
 SS = SheetsScraper("https://docs.google.com/spreadsheets/d/1h3ax4sytEZDduxuduNwzYCiZr4PQu3z332Yp70wWPJU/edit?usp=sharing")
-ranks = SS.getRanks()
+players = SS.getPlayers()
 
-for rank in ranks:
-    print(rank)
-print(SS.getSize())
+print(players)
