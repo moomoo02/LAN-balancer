@@ -17,7 +17,14 @@ class SheetsScraper:
     def __init__(self, sheetUrl):
         self.convertSheetToCsv(sheetUrl)
         self.data = "data.csv"
-
+        self.rankScore = {"Iron4": -1, "Iron3": -1, "Iron2": -1, "Iron1": -1,
+                          "Bronze4": 0, "Bronze3": 0, "Bronze2": 0, "Bronze1": 0, 
+                          "Silver4": 0, "Silver3": 0, "Silver2": 0, "Silver1": 0, 
+                          "Gold4": 1, "Gold3": 1, "Gold2": 2, "Gold1": 2,
+                          "Plat4": 3, "Plat3": 3, "Plat2": 4, "Plat1": 4,
+                          "Diamond4": 5, "Diamond3": 5, "Diamond2": 6, "Diamond1": 6,
+                          "Master": 7, "Challenger": 8}
+                          
     #Get the names of everyone on the sheets and returns a list of names
     def convertSheetToCsv(self,sheetURL):
         html = requests.get(sheetURL).text
@@ -39,6 +46,10 @@ class SheetsScraper:
             if not pd.isnull(name):
                 res.append(name)
         return res
+
+    #Return dictionary of key: ign, value: rank
+    def getPlayers(self):
+        None
 
 
 
