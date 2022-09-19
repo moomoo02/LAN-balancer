@@ -24,7 +24,7 @@ class SheetsScraper:
                           "Plat4": 3, "Plat3": 3, "Plat2": 4, "Plat1": 4,
                           "Diamond4": 5, "Diamond3": 5, "Diamond2": 6, "Diamond1": 6,
                           "Master": 7, "Challenger": 8}
-                          
+
     #Get the names of everyone on the sheets and returns a list of names
     def convertSheetToCsv(self,sheetURL):
         html = requests.get(sheetURL).text
@@ -47,8 +47,22 @@ class SheetsScraper:
                 res.append(name)
         return res
 
+    def getIgns(self):
+        df = pd.read_csv(self.data, encoding='cp1252')
+        igns = df['In-Game/Summoner Name'] #you can also use df['column_name']
+
+        #Filter out nan
+        res = []
+        for ign in igns:
+            if not pd.isnull(ign):
+                res.append(ign)
+        return res
+
     #Return dictionary of key: ign, value: rank
     def getPlayers(self):
+        #Get list of igns
+        igns = self.getIgns();
+        #Get list of ranks converted to integers
         None
 
 
@@ -58,7 +72,7 @@ class SheetsScraper:
 
 
 SS = SheetsScraper("https://docs.google.com/spreadsheets/d/1h3ax4sytEZDduxuduNwzYCiZr4PQu3z332Yp70wWPJU/edit?usp=sharing")
-names = SS.getNames()
+igns = SS.getIgns()
 
-for name in names:
-    print(name)
+for ign in igns:
+    print(ign)
