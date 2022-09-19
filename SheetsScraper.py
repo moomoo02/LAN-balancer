@@ -11,7 +11,6 @@ gc = gspread.service_account(filename="creds.json")
 sh = gc.open('LAN-balancer-data').sheet1
 
 
-sh.append_row(['first','second'])
 
 class SheetsScraper:
     def __init__(self, sheetUrl):
@@ -47,6 +46,7 @@ class SheetsScraper:
                 res.append(name)
         return res
 
+    #Gets all signed-up IGNS
     def getIgns(self):
         df = pd.read_csv(self.data, encoding='cp1252')
         igns = df['In-Game/Summoner Name'] #you can also use df['column_name']
@@ -57,6 +57,11 @@ class SheetsScraper:
             if not pd.isnull(ign):
                 res.append(ign)
         return res
+
+    #Gets number of participants
+    def getSize(self):
+        res = self.getNames()
+        return len(res)
 
     #Return dictionary of key: ign, value: rank
     def getPlayers(self):
@@ -76,3 +81,4 @@ igns = SS.getIgns()
 
 for ign in igns:
     print(ign)
+print(SS.getSize())
