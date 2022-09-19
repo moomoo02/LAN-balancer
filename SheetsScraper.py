@@ -22,7 +22,7 @@ class SheetsScraper:
                           "Gold4": 1, "Gold3": 1, "Gold2": 2, "Gold1": 2,
                           "Plat4": 3, "Plat3": 3, "Plat2": 4, "Plat1": 4,
                           "Diamond4": 5, "Diamond3": 5, "Diamond2": 6, "Diamond1": 6,
-                          "Master": 7, "Challenger": 8}
+                          "Master": 7, "Challenger": 8, "Unranked": 0}
 
     #Get the names of everyone on the sheets and returns a list of names
     def convertSheetToCsv(self,sheetURL):
@@ -63,6 +63,18 @@ class SheetsScraper:
         res = self.getNames()
         return len(res)
 
+    #Gets list of player ranks 
+    def getRanks(self):
+        df = pd.read_csv(self.data, encoding='cp1252')
+        ranks = df['Peak Season 11 or 12 Rank '] #you can also use df['column_name']
+
+        #Filter out nan
+        res = []
+        for rank in ranks:
+            if not pd.isnull(rank):
+                res.append(rank)
+        return res
+
     #Return dictionary of key: ign, value: rank
     def getPlayers(self):
         #Get list of igns
@@ -77,8 +89,8 @@ class SheetsScraper:
 
 
 SS = SheetsScraper("https://docs.google.com/spreadsheets/d/1h3ax4sytEZDduxuduNwzYCiZr4PQu3z332Yp70wWPJU/edit?usp=sharing")
-igns = SS.getIgns()
+ranks = SS.getRanks()
 
-for ign in igns:
-    print(ign)
+for rank in ranks:
+    print(rank)
 print(SS.getSize())
