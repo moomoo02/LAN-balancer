@@ -1,8 +1,10 @@
 class LeagueBalancer:
 
-    def __init__(self, list={}):
-        self.list = list
+    def __init__(self, players={}):
+        self.players = players
 
-    def hi(self):
-        print("hi")
+
+    #Returns the list of players and their rank score
+    def getPlayers(self):
+        return self.players
 
