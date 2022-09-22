@@ -8,7 +8,6 @@ class LeagueBalancer:
         self.playersListSize = len(players)
         self.numberOfTeams = round(len(players) / 5)    
         self.roleMap = {"TOP": 0, "JG": 1, "MID": 2, "ADC": 3, "SUP": 4}
-        self.balanceResult = [["moomoo02" for i in range(self.numberOfTeams)] for j in range(5)]
 
     #Returns the list of players and their rank score
     def getPlayers(self):
