@@ -99,6 +99,18 @@ class SheetsScraper:
                 res.append(ign)
         return res
 
+    #Gets list of all secondary roles
+    def getSecondaryRoles(self):
+        df = pd.read_csv(self.data, encoding='cp1252')
+        igns = df['Secondary Role'] #you can also use df['column_name']
+
+        #Filter out nan
+        res = []
+        for ign in igns:
+            if not pd.isnull(ign):
+                res.append(ign)
+        return res
+
 
     #Return dictionary of key: ign, value: [rankScore, primary, secondary]
     def getPlayers(self):
@@ -107,10 +119,11 @@ class SheetsScraper:
         #Get list of ranks converted to integers
         rankScores = self.convertRanksToScore(self.getRanks())
         primaryRoles = self.getPrimaryRoles()
+        secondaryRoles = self.getSecondaryRoles()
 
         playerData = []
         for i in range(len(rankScores)):
-            playerData.append([rankScores[i], primaryRoles[i]])
+            playerData.append([rankScores[i], primaryRoles[i], secondaryRoles[i]])
 
         res = dict(zip(igns, playerData))
         return res
