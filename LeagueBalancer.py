@@ -18,3 +18,5 @@ class LeagueBalancer:
         
         return scoreSum / self.numberOfTeams
 
+    
+
