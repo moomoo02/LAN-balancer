@@ -9,6 +9,6 @@ players = SS.getPlayers()
 
 LB = LeagueBalancer(players)
 print(LB.getPlayers())
-
+print(LB.balance())
 
 #https://docs.google.com/spreadsheets/d/1PWUfp-dwh_t6uyfuJis6Tth2OmIVe3g_seySaZDyp_c/edit?usp=sharing
