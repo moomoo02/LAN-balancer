@@ -128,9 +128,6 @@ class SheetsScraper:
         res = dict(zip(igns, playerData))
         return res
 
-SS = SheetsScraper("https://docs.google.com/spreadsheets/d/1h3ax4sytEZDduxuduNwzYCiZr4PQu3z332Yp70wWPJU/edit?usp=sharing")
-
-print(SS.getPlayers())
 
 
 
