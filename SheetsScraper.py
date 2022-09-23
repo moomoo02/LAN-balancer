@@ -6,9 +6,9 @@ import csv
 import requests
 import sys
 
-gc = gspread.service_account(filename="creds.json")
+# gc = gspread.service_account(filename="creds.json")
 
-sh = gc.open('LAN-balancer-data').sheet1
+# sh = gc.open('LAN-balancer-data').sheet1
 
 
 
