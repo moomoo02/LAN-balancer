@@ -1,4 +1,5 @@
 from functools import cmp_to_key
+from random import randrange
 import math
 
 class LeagueBalancer:
@@ -23,13 +24,36 @@ class LeagueBalancer:
         curTeam = 0
         for i in range(len(self.players)-self.numberOfTeams, len(self.players)):
             ign, rank, priRole, secRole = playerList[i][0], playerList[i][1][0], self.roleMap[playerList[i][1][1]], self.roleMap[playerList[i][1][2]]
+            if priRole == -1:
+                priRole = randrange(5)
             balanceResult[curTeam][priRole] = ign
             averageList[curTeam] += rank
             curTeam += 1
         
-        print(balanceResult)
         #Put worst 5 in different teams
-        return balanceResult
+        curTeam = self.numberOfTeams - 1
+        for i in range(0, self.numberOfTeams):
+            ign, rank, priRole, secRole = playerList[i][0], playerList[i][1][0], self.roleMap[playerList[i][1][1]], self.roleMap[playerList[i][1][2]]
+            #Fill edge case
+            if priRole == -1:
+                priRole = randrange(5)
+                while balanceResult[curTeam][priRole] != "":
+                    priRole = randrange(5)
+                balanceResult[curTeam][priRole] = ign
+            elif balanceResult[curTeam][priRole] == "":
+                balanceResult[curTeam][priRole] = ign
+            elif secRole == -1:
+                secRole = randrange(5)
+                while balanceResult[curTeam][secRole] != "":
+                    secRole = randrange(5)
+                balanceResult[curTeam][secRole] = ign
+            else:
+                balanceResult[curTeam][secRole] = ign
+    
+            averageList[curTeam] += rank
+            curTeam -= 1
+
+        return (balanceResult, averageList)
 
     #Returns the ideal score of a team
     def getTeamAverageScore(self):
