@@ -7,7 +7,6 @@ import requests
 import sys
 
 # gc = gspread.service_account(filename="creds.json")
-
 # sh = gc.open('LAN-balancer-data').sheet1
 
 
